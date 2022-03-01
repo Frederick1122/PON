@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DataHolder : MonoBehaviour
@@ -58,7 +59,7 @@ public class DataHolder : MonoBehaviour
 
     IEnumerator Timer()
     {
-        while (true)
+        while (seconds > 0)
         {
             yield return new WaitForSeconds(1f);
             seconds--;
@@ -68,6 +69,8 @@ public class DataHolder : MonoBehaviour
                 break;
             }
         }
+
+        Restart();
     }
 
     public void ChangeCarma(int _modificationCarma)
@@ -84,5 +87,8 @@ public class DataHolder : MonoBehaviour
         }
         carmaSlider.value = carma;
     }
-
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

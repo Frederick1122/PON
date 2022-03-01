@@ -37,6 +37,7 @@ public class PlayerScript : MonoBehaviour
         {
             checkerTower.OpenShop();
         }
+        
     }
     private void MovePlayer()
     {
@@ -60,9 +61,11 @@ public class PlayerScript : MonoBehaviour
             if (tag == "GreyArea" && WASDOrNot || tag == "GreenArea" && !WASDOrNot)
             {
                 var DD = DeathZone.main;
-                
-                checkerTower.GetComponent<TowerPlaceManager>().CloseShop(false);
-                GetComponent<PlayerScript>().checkerTower = null;
+                if (checkerTower != null)
+                {
+                    checkerTower.GetComponent<TowerPlaceManager>().CloseShop(false);
+                    GetComponent<PlayerScript>().checkerTower = null;
+                }
                 DD.Respawn(gameObject);
             }
         }

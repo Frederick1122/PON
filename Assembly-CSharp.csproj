@@ -56,15 +56,15 @@
     <Compile Include="Assets\Scripts\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\CoinScript.cs" />
     <Compile Include="Assets\Config\DataConfig.cs" />
+    <Compile Include="Assets\Scripts\Tower.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\DeathZone.cs" />
     <Compile Include="Assets\Scripts\RegionManager.cs" />
-    <Compile Include="Assets\TowerPlaceManager.cs" />
+    <Compile Include="Assets\Scripts\TowerPlaceManager.cs" />
     <Compile Include="Assets\Scripts\PlatformManager.cs" />
     <Compile Include="Assets\Scripts\DataHolder.cs" />
-    <Compile Include="Assets\ShopScript.cs" />
+    <Compile Include="Assets\Scripts\ShopScript.cs" />
     <Compile Include="Assets\Scripts\AimRange.cs" />
-    <Compile Include="Assets\Scripts\Tower.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

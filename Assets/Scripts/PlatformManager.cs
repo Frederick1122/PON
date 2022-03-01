@@ -61,6 +61,9 @@ public class PlatformManager : MonoBehaviour
                     }
                 }
                 greyArea.RemoveAt(0);
+            } else
+            {
+                DataHolder.main.Restart();
             }
         }
         else
@@ -88,6 +91,10 @@ public class PlatformManager : MonoBehaviour
                     }
                 }
                 greenArea.RemoveAt(0);
+            }
+            else
+            {
+                DataHolder.main.Restart();
             }
         }
         NewSpawnPositions();

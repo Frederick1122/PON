@@ -559,7 +559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0.00012207031}
   m_SizeDelta: {x: 900.7252, y: 296.9485}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &438589756
@@ -1061,7 +1061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8596824609185329183, guid: 9cf08fbe694cee54a8fd54da9f5951ed, type: 3}
       propertyPath: m_Text
-      value: "[9] Second oilTower.\n 40 coins.\n 2 carma/sec"
+      value: "[Keypad2] Second oilTower.\n 40 coins.\n 2 carma/sec"
       objectReference: {fileID: 0}
     - target: {fileID: 8596824609410167750, guid: 9cf08fbe694cee54a8fd54da9f5951ed, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1089,7 +1089,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8596824610158640072, guid: 9cf08fbe694cee54a8fd54da9f5951ed, type: 3}
       propertyPath: m_Text
-      value: "[0] First oilTower.\n 20 coins.\n 1 carma/sec"
+      value: "[Keypad1] First oilTower.\n 20 coins.\n 1 carma/sec"
       objectReference: {fileID: 0}
     - target: {fileID: 8596824610316835128, guid: 9cf08fbe694cee54a8fd54da9f5951ed, type: 3}
       propertyPath: m_Color.b
