@@ -8,13 +8,14 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private bool WASDOrNot;
     [SerializeField] private float speed;
     [SerializeField] private Animator characterAnimator;
-
+    public TowerPlaceManager checkerTower;
     private Vector3 moveVector;
     private Vector3 moveVector2;
     [SerializeField] private float gravityForce;
     private CharacterController characterController;
     private bool action;
-    
+
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -30,7 +31,13 @@ public class PlayerScript : MonoBehaviour
             MovePlayer();
         }
     }
-
+    private void Update()
+    {
+        if (((Input.GetKeyDown(KeyCode.E) && WASDOrNot) || (Input.GetKeyDown(KeyCode.M) && !WASDOrNot)) && checkerTower != null)
+        {
+            checkerTower.OpenShop();
+        }
+    }
     private void MovePlayer()
     {
         var forward = moveVector; var right = moveVector2;
@@ -53,6 +60,9 @@ public class PlayerScript : MonoBehaviour
             if (tag == "GreyArea" && WASDOrNot || tag == "GreenArea" && !WASDOrNot)
             {
                 var DD = DeathZone.main;
+                
+                checkerTower.GetComponent<TowerPlaceManager>().CloseShop(false);
+                GetComponent<PlayerScript>().checkerTower = null;
                 DD.Respawn(gameObject);
             }
         }

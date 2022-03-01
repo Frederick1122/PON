@@ -59,9 +59,12 @@
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\DeathZone.cs" />
     <Compile Include="Assets\Scripts\RegionManager.cs" />
+    <Compile Include="Assets\TowerPlaceManager.cs" />
     <Compile Include="Assets\Scripts\PlatformManager.cs" />
     <Compile Include="Assets\Scripts\DataHolder.cs" />
+    <Compile Include="Assets\ShopScript.cs" />
     <Compile Include="Assets\Scripts\AimRange.cs" />
+    <Compile Include="Assets\Scripts\Tower.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

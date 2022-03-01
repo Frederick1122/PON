@@ -41,7 +41,25 @@ public class PlatformManager : MonoBehaviour
             if (greyArea.Count > 1)
             {
                 greenArea.Add(greyArea[0]);
-                
+                GameObject g = greenArea[0];
+                for (int i = 0; i < greenArea.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        g = greenArea[i + 1];
+                        greenArea[i + 1] = greenArea[i];
+                    }
+                    else if (i < greenArea.Count - 1)
+                    {
+                        GameObject gg = greenArea[i + 1];
+                        greenArea[i + 1] = g;
+                        g = gg;
+                    }
+                    else
+                    {
+                        greenArea[0] = g;
+                    }
+                }
                 greyArea.RemoveAt(0);
             }
         }
@@ -50,7 +68,25 @@ public class PlatformManager : MonoBehaviour
             if (greenArea.Count > 1)
             {
                 greyArea.Add(greenArea[0]);
-                
+                GameObject g = greyArea[0];
+                for(int i = 0; i< greyArea.Count; i++)
+                {
+                    if(i == 0)
+                    {
+                        g = greyArea[i + 1];
+                        greyArea[i + 1] = greyArea[i];
+                    }
+                    else if(i < greyArea.Count-1)
+                    {
+                        GameObject gg = greyArea[i+1];
+                        greyArea[i + 1] = g;
+                        g = gg;
+                    }
+                    else
+                    {
+                        greyArea[0] = g;
+                    }
+                }
                 greenArea.RemoveAt(0);
             }
         }
@@ -62,7 +98,7 @@ public class PlatformManager : MonoBehaviour
         DeathZone.main.EraseSpawns();
         foreach (GameObject i in greenArea)
         {
-            DeathZone.main.SpawnsFirstPlayer.Add(i.GetComponent<RegionManager>().spawn);
+            DeathZone.main.SpawnsFirstPlayer.Add(i.GetComponent<RegionManager>().spawnPos);
             if (!i.CompareTag("GreenArea"))
             {
                 if (flag)
@@ -73,10 +109,11 @@ public class PlatformManager : MonoBehaviour
                 i.tag = "GreenArea";
             }
             i.GetComponent<RegionManager>().SwitchMaterial(true);
+           
         }
         foreach (GameObject i in greyArea)
         {
-            DeathZone.main.SpawnsSecondPlayer.Add(i.GetComponent<RegionManager>().spawn);
+            DeathZone.main.SpawnsSecondPlayer.Add(i.GetComponent<RegionManager>().spawnPos);
             if (!i.CompareTag("GreyArea"))
             {
                 if (flag)
@@ -87,6 +124,8 @@ public class PlatformManager : MonoBehaviour
                 i.tag = "GreyArea";
             }
             i.GetComponent<RegionManager>().SwitchMaterial(false);
+            
+
         }
     }
 

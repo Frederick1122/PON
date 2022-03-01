@@ -18,7 +18,6 @@ public class DeathZone : MonoBehaviour
     {
         if (main != null && main != this)
         {
-
             Destroy(this);
             return;
         }
@@ -32,7 +31,6 @@ public class DeathZone : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-
         if (!other.CompareTag("Player1") && !other.CompareTag("Player2"))
         {
             Destroy(other.gameObject);

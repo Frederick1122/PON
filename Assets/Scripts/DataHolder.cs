@@ -8,9 +8,9 @@ public class DataHolder : MonoBehaviour
     public static DataHolder main;
     //FP - first player, SP - second player
     [Header("FOR DEBUG")]
-    public int FPCoins;
-    public int SPCoins;
-    public int carma;
+    public int[] coins;
+    [SerializeField]private int carma;
+    [SerializeField]private Slider carmaSlider;
     public int minutes;
     [SerializeField] private Text FPScore;
     [SerializeField] private Text SPScore;
@@ -32,7 +32,7 @@ public class DataHolder : MonoBehaviour
     {
         seconds = minutes * 60;
         timerText.text = (seconds % 60 < 10) ? $"{seconds / 60}:0{seconds % 60}" : $"{seconds / 60}:{seconds % 60}";
-        FPCoins = 0; SPCoins = 0;
+        coins[0] = 0; coins[1] = 0;
         RefreshScore();
         StartCoroutine(Timer());
     }
@@ -40,20 +40,20 @@ public class DataHolder : MonoBehaviour
     {
         if (tag == "Player1")
         {
-            FPCoins += quantity;
+            coins[0] += quantity;
 
         }
         else
         {
-            SPCoins += quantity;
+            coins[1] += quantity;
         }
         RefreshScore();
     }
 
     public void RefreshScore()
     {
-        FPScore.text = FPCoins.ToString();
-        SPScore.text = SPCoins.ToString();
+        FPScore.text = coins[0].ToString();
+        SPScore.text = coins[1].ToString();
     }
 
     IEnumerator Timer()
@@ -69,4 +69,20 @@ public class DataHolder : MonoBehaviour
             }
         }
     }
+
+    public void ChangeCarma(int _modificationCarma)
+    {
+        carma += _modificationCarma;
+        if(carma >= 100)
+        {
+            PlatformManager.main.RegionCapture(true);
+            carma = 0;
+        } else if (carma <= -100)
+        {
+            PlatformManager.main.RegionCapture(false);
+            carma = 0;
+        }
+        carmaSlider.value = carma;
+    }
+
 }
