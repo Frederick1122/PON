@@ -33,8 +33,9 @@ public class DeathZone : MonoBehaviour
     {
         if (!other.CompareTag("Player1") && !other.CompareTag("Player2"))
         {
-            Destroy(other.gameObject);
+            return;
         }
+        //other.gameObject.GetComponent<PlayerScript>().ResetRays();
         Respawn(other.gameObject);
     }
 
@@ -43,8 +44,6 @@ public class DeathZone : MonoBehaviour
 
         player.SetActive(false);
         yield return new WaitForSeconds(rebirthTime);
-
-
         Spawn(SpawnPosition(player.tag), player);
 
 

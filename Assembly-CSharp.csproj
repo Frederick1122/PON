@@ -53,7 +53,6 @@
     <UnityVersion>2020.3.27f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\CoinScript.cs" />
     <Compile Include="Assets\Config\DataConfig.cs" />
     <Compile Include="Assets\Scripts\Tower.cs" />
@@ -65,6 +64,8 @@
     <Compile Include="Assets\Scripts\DataHolder.cs" />
     <Compile Include="Assets\Scripts\ShopScript.cs" />
     <Compile Include="Assets\Scripts\AimRange.cs" />
+    <Compile Include="Assets\TriggerZone.cs" />
+    <Compile Include="Assets\AttackWave.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

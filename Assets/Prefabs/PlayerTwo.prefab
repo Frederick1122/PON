@@ -95,9 +95,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 718157fcaecd84242b6c3fa5c160d1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WASDOrNot: 0
+  aim: {fileID: 5303594989475055388, guid: 8d58ecc91dff5fc4eb9e807da9693c2d, type: 3}
+  isGreen: 0
   speed: 10
-  characterAnimator: {fileID: 0}
+  checkerTower: {fileID: 0}
   gravityForce: 0
 --- !u!143 &1361909475005937111
 CharacterController:

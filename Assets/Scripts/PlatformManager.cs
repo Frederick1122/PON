@@ -11,7 +11,7 @@ public class PlatformManager : MonoBehaviour
     [SerializeField] private GameObject greenCoin;
     [SerializeField] private GameObject greyCoin;
     [SerializeField] private float coinSpawnTime;
-
+    [SerializeField] private GameObject container;
 
     public int FPQuantityCoins;
     public int SPQuantityCoins;
@@ -150,6 +150,7 @@ public class PlatformManager : MonoBehaviour
                     0.1f, Random.Range(col.bounds.min.z, col.bounds.max.z));
                 GameObject g = Instantiate(greenCoin, position, Quaternion.identity);
                 g.GetComponent<CoinScript>().parentCollider = col;
+                g.transform.parent = container.transform;
             }
             if (SPQuantityCoins < 15)
             {
@@ -160,6 +161,7 @@ public class PlatformManager : MonoBehaviour
                     0.1f, Random.Range(col.bounds.min.z, col.bounds.max.z));
                 GameObject g = Instantiate(greyCoin, position, Quaternion.identity);
                 g.GetComponent<CoinScript>().parentCollider = col;
+                g.transform.parent = container.transform;
             }
         }
     }
