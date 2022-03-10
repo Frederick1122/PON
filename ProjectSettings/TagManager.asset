@@ -9,6 +9,7 @@ TagManager:
   - Border
   - GreenArea
   - GreyArea
+  - Buildings
   layers:
   - Default
   - TransparentFX

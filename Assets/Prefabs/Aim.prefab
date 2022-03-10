@@ -77,10 +77,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   direction: 0
+  attackItemPrefab: {fileID: 4910412334209875888, guid: bb062d96b3331954682a6f6e33459814, type: 3}
   checkerTransform: {fileID: 3760319895998899559}
   aimRenderer: {fileID: 5752424939150125560}
   y: 0
   isGreen: 0
+  player: {fileID: 0}
 --- !u!1 &6671917299879272134
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class AimRange : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private bool direction; // if up - false, down - true
 
+    [SerializeField] GameObject attackItemPrefab;
     [SerializeField] private Transform checkerTransform;
     [SerializeField] private MeshRenderer aimRenderer;
 
@@ -82,6 +83,7 @@ public class AimRange : MonoBehaviour
 
     void Attack()
     {
-
+        GameObject g = Instantiate(attackItemPrefab, checkerTransform.position, transform.rotation);
+        g.GetComponentInChildren<AttackWave>().isGreen = isGreen;
     }
 }

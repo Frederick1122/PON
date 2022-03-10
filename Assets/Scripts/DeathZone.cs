@@ -11,7 +11,9 @@ public class DeathZone : MonoBehaviour
     /*[HideInInspector]*/
     public List<Transform> SpawnsSecondPlayer = new List<Transform>();
     [SerializeField] private GameObject firstPlayer;
+    [SerializeField] private AttackEnergy firstAttackEnergy;
     [SerializeField] private GameObject secondPlayer;
+    [SerializeField] private AttackEnergy secondAttackEnergy;
 
 
     private void Awake()
@@ -63,7 +65,12 @@ public class DeathZone : MonoBehaviour
     {
         if (start)
         {
-            Instantiate(player, spawn.position, Quaternion.identity);
+            GameObject g = Instantiate(player, spawn.position, Quaternion.identity);
+            if (player.CompareTag("Player1"))
+                g.GetComponent<PlayerScript>().attackEnergy = firstAttackEnergy;
+            else
+                g.GetComponent<PlayerScript>().attackEnergy = secondAttackEnergy;
+
         }
         else
         {

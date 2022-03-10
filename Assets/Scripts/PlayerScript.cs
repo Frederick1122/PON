@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] private GameObject aim;
+    public AttackEnergy attackEnergy;
     public bool isGreen;
     [SerializeField] private float speed;
     //[SerializeField] private Animator characterAnimator;
@@ -48,7 +49,7 @@ public class PlayerScript : MonoBehaviour
     }
     private void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.E) && isGreen) || (Input.GetKeyDown(KeyCode.M) && !isGreen)) 
+        if ((Input.GetKeyDown(KeyCode.E) && isGreen) || (Input.GetKeyDown(KeyCode.M) && !isGreen))
         {
             if (checkerTower != null)
             {
@@ -59,7 +60,7 @@ public class PlayerScript : MonoBehaviour
                 Action();
             }
         }
-        
+
     }
     private void MovePlayer()
     {
@@ -145,11 +146,12 @@ public class PlayerScript : MonoBehaviour
 
     void Action()
     {
-        if (action || hashtableRays.Count == 0) return;
+        if (action || hashtableRays.Count == 0 || attackEnergy.energy < 100) return;
+        attackEnergy.energy = 0;
         ICollection keys = hashtableRays.Keys;
-        foreach(int i in keys)
+        foreach (int i in keys)
         {
-            Ray r = new Ray(transform.position,Vector3.down);
+            Ray r = new Ray(transform.position, Vector3.down);
             RaycastHit hit;
             Physics.Raycast(r, out hit);
             GameObject g = Instantiate(aim, hit.point, Quaternion.identity);
