@@ -1,14 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinScript : MonoBehaviour
 {
-    public MeshCollider parentCollider;
-    public bool move;
-
+    [NonSerialized] public bool isGreen;
+    [NonSerialized] public MeshCollider parentCollider;
     private MeshRenderer meshRenderer;
-
+    private bool move;
+    private Material parentMaterial;
     private void OnTriggerEnter(Collider other)
     {
         if (!move)
@@ -37,13 +38,32 @@ public class CoinScript : MonoBehaviour
             move = false;
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other == parentCollider)
+        {
+            if (parentMaterial != parentCollider.gameObject.GetComponent<MeshRenderer>().material)
+            {
+                if (isGreen)
+                {
+                    PlatformManager.main.FPQuantityCoins--;
+                }
+                else
+                {
+                    PlatformManager.main.SPQuantityCoins--;
+                }
+                Destroy(gameObject);
+            }
+        }
+    }
     void Start()
     {
         move = true;
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
+        parentMaterial = parentCollider.gameObject.GetComponent<MeshRenderer>().material;
         StartCoroutine(StartingCoroutine());
-
     }
     IEnumerator StartingCoroutine()
     {
@@ -53,8 +73,8 @@ public class CoinScript : MonoBehaviour
             if (move)
             {
                 Vector3 position = new Vector3(
-                    Random.Range(parentCollider.bounds.min.x, parentCollider.bounds.max.x),
-                0.1f, Random.Range(parentCollider.bounds.min.z, parentCollider.bounds.max.z));
+                    UnityEngine.Random.Range(parentCollider.bounds.min.x, parentCollider.bounds.max.x),
+                0.1f, UnityEngine.Random.Range(parentCollider.bounds.min.z, parentCollider.bounds.max.z));
                 transform.position = position;
             }
             else

@@ -7,15 +7,24 @@ using UnityEngine.UI;
 public class DataHolder : MonoBehaviour
 {
     public static DataHolder main;
-    //FP - first player, SP - second player
-    [Header("FOR DEBUG")]
-    public int[] coins;
-    [SerializeField]private int carma;
-    [SerializeField]private Slider carmaSlider;
-    public int minutes;
+
+    [Header("UIElements")]
+    [SerializeField] private Slider carmaSlider;
     [SerializeField] private Text FPScore;
     [SerializeField] private Text SPScore;
     [SerializeField] private Text timerText;
+    [Space]
+    [Header("LevelSettings")]
+    public float rebirthTime;
+    public int RangeSpeed;
+    public int minutes;
+
+    [Space(5)]
+    [Header("FOR DEBUG")]
+    public int[] coins;
+    [SerializeField]private int carma;
+
+    //FP - first player, SP - second player
 
     private int seconds;
     private void Awake()
@@ -53,8 +62,8 @@ public class DataHolder : MonoBehaviour
 
     public void RefreshScore()
     {
-        FPScore.text = coins[0].ToString();
-        SPScore.text = coins[1].ToString();
+        FPScore.text = $"Score: \n{coins[0].ToString()}";
+        SPScore.text = $"Score: \n{coins[1].ToString()}";
     }
 
     IEnumerator Timer()

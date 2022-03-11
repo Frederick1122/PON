@@ -5,6 +5,9 @@ using UnityEngine;
 public class TowerPlaceManager : MonoBehaviour
 {
     public bool isGreen;
+
+    [Space]
+    [Header("PrefabSettings")]
     [SerializeField] private GameObject[] shops;
     public MeshRenderer meshRenderer;
     public Material gray;

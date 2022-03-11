@@ -1,31 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlatformManager : MonoBehaviour
 {
     public static PlatformManager main;
+
+    [Header("AreaSettings")]
+    [SerializeField] private float coinSpawnTime;
+    [Space]
     [SerializeField] List<GameObject> greenArea = new List<GameObject>();
     [SerializeField] List<GameObject> greyArea = new List<GameObject>();
-
     [SerializeField] private GameObject greenCoin;
     [SerializeField] private GameObject greyCoin;
-    [SerializeField] private float coinSpawnTime;
+    [Space]
     [SerializeField] private GameObject container;
-
-    public int FPQuantityCoins;
-    public int SPQuantityCoins;
+    [NonSerialized]public int FPQuantityCoins;
+    [NonSerialized]public int SPQuantityCoins;
     private void Awake()
     {
         if (main != null && main != this)
         {
-
             Destroy(this);
             return;
         }
-
         main = this;
-        
     }
     private void Start()
     {
@@ -72,7 +73,7 @@ public class PlatformManager : MonoBehaviour
             {
                 greyArea.Add(greenArea[0]);
                 GameObject g = greyArea[0];
-                for(int i = 0; i< greyArea.Count; i++)
+                for (int i = 0; i< greyArea.Count; i++)
                 {
                     if(i == 0)
                     {
@@ -150,6 +151,7 @@ public class PlatformManager : MonoBehaviour
                     0.1f, Random.Range(col.bounds.min.z, col.bounds.max.z));
                 GameObject g = Instantiate(greenCoin, position, Quaternion.identity);
                 g.GetComponent<CoinScript>().parentCollider = col;
+                g.GetComponent<CoinScript>().isGreen = true;
                 g.transform.parent = container.transform;
             }
             if (SPQuantityCoins < 15)
@@ -161,6 +163,7 @@ public class PlatformManager : MonoBehaviour
                     0.1f, Random.Range(col.bounds.min.z, col.bounds.max.z));
                 GameObject g = Instantiate(greyCoin, position, Quaternion.identity);
                 g.GetComponent<CoinScript>().parentCollider = col;
+                g.GetComponent<CoinScript>().isGreen = false;
                 g.transform.parent = container.transform;
             }
         }

@@ -1,18 +1,23 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RegionManager : MonoBehaviour
 {
-    private int flag = 0;
+    [Header("PrefabSettings")]
     public Transform spawnPos;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private Material gray;
     [SerializeField] private Material green;
     [SerializeField] private GameObject tower;
+
+    [NonSerialized] public bool isGreen;
+    private int flag = 0;
+
     public void SwitchMaterial(bool _flag) // if true - green, false - grey
     {
         var towerScript = tower.GetComponent<TowerPlaceManager>();
+        isGreen = _flag;
         if (_flag && (flag == 0 || flag == 2))
         {
             flag = 1;

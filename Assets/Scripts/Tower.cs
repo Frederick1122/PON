@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    
+    [Header("PrefabSettings")]
     [SerializeField] private bool isGreen; 
     [SerializeField] private int carma; 
     void Start()
@@ -20,5 +20,4 @@ public class Tower : MonoBehaviour
         }
     }
 
-    
 }

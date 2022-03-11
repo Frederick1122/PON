@@ -1,56 +1,78 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AimRange : MonoBehaviour
 {
 
+    [Header("AimSettings")]
     [SerializeField] private float speed;
-    [SerializeField] private bool direction; // if up - false, down - true
-
+    [Space]
+    [Header("PrefabSettings")]
     [SerializeField] GameObject attackItemPrefab;
     [SerializeField] private Transform checkerTransform;
     [SerializeField] private MeshRenderer aimRenderer;
 
-    [SerializeField] private float y;
-    public bool isGreen;
-    public PlayerScript player;
+    [Space]
+    [Header("For debug")]
+    [SerializeField] private bool direction; // if up - false, down - true
+    [SerializeField] private bool waitCoroutineWorked; 
+    [SerializeField] private float rotationY;
+
+    // private settings
+    [NonSerialized] public PlayerScript player;
+    [SerializeField]private bool isGreen;
+
     void Rotating()
     {
-
+        
+        Ray ray = new Ray(checkerTransform.position, Vector3.down);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit);
+        //Debug.Log($"{hit.collider.name} {hit.collider.GetComponent<RegionManager>().isGreen != isGreen}");
         if (!direction)
         {
-            float yy = (y + 90 > 360) ? y + 90 - 360 : y + 90;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, y + 90.0f, 0.0f), Time.deltaTime * speed);
-            // Debug.Log($"{transform.rotation.eulerAngles.y} {yy}");
-            if (transform.rotation.eulerAngles.y < yy + 5f && transform.rotation.eulerAngles.y > yy - 5.0f)
+            float yy = (rotationY + 90 > 360) ? rotationY + 90 - 360 : rotationY + 90;
+            if(yy == transform.rotation.eulerAngles.y)
             {
-                direction = true;
+                rotationY = yy;
             }
-        }
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, rotationY + 90.0f, 0.0f), Time.deltaTime * speed);
+                    }
         else
         {
-            float yy = (y - 90 < 0) ? y - 90 + 360 : y - 90;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, y - 90.0f, 0.0f), Time.deltaTime * speed);
-            //Debug.Log($"{transform.rotation.eulerAngles.y} {yy}");
-            if (transform.rotation.eulerAngles.y < yy + 5f && transform.rotation.eulerAngles.y > yy - 5.0f)
+            float yy = (rotationY - 90 < 0) ? rotationY - 90 + 360 : rotationY - 90;
+            if (yy == transform.rotation.eulerAngles.y)
             {
-                direction = false;
+                rotationY = yy;
+            }
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0.0f, rotationY - 90.0f, 0.0f), Time.deltaTime * speed);
+            
+        }
+        if (waitCoroutineWorked) return;
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.GetComponent<RegionManager>().isGreen != isGreen)
+            {
+                StartCoroutine(WaitCoroutine());
             }
         }
     }
     private void Start()
     {
-        y = transform.rotation.eulerAngles.y;
+        waitCoroutineWorked = false;
+        isGreen = !player.isGreen;
+        rotationY = transform.rotation.eulerAngles.y;
+        aimRenderer.enabled = false;
         StartRotating();
     }
     private void Update()
     {
         Rotating();
-        if ((Input.GetKeyDown(KeyCode.E) && isGreen) || (Input.GetKeyDown(KeyCode.M) && !isGreen))
+        if ((Input.GetKeyDown(KeyCode.E) && !isGreen) || (Input.GetKeyDown(KeyCode.M) && isGreen))
         {
             Attack();
-            player.action = false;
+            player.playerCondition = PlayerScript.PlayerCondition.moving;
             Destroy(gameObject);
         }
         Debug.DrawRay(checkerTransform.position, Vector3.down);
@@ -66,9 +88,10 @@ public class AimRange : MonoBehaviour
             {
                 string tag = hit.collider.tag;
                 Debug.Log($"{hit.collider.name}");
-                if (tag == "GreyArea" && isGreen || tag == "GreenArea" && !isGreen)
+                if (tag == "GreyArea" && !isGreen || tag == "GreenArea" && isGreen)
                 {
                     Debug.Log($"You're position - {gameObject.transform.eulerAngles}");
+                    aimRenderer.enabled = true;
                     break;
                 }
             }
@@ -79,11 +102,17 @@ public class AimRange : MonoBehaviour
         }
 
     }
-
-
+    IEnumerator WaitCoroutine()
+    {
+        waitCoroutineWorked = true;
+        direction = !direction;
+        Debug.Log(direction);
+        yield return new WaitForSeconds(0.5f);
+        waitCoroutineWorked = false;
+    }
     void Attack()
     {
         GameObject g = Instantiate(attackItemPrefab, checkerTransform.position, transform.rotation);
-        g.GetComponentInChildren<AttackWave>().isGreen = isGreen;
+        g.GetComponentInChildren<AttackWave>().isGreen = !isGreen;
     }
 }

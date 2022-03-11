@@ -1,13 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+
 
 public class ShopScript : MonoBehaviour
 {
     [SerializeField] private bool isGreen;
-    public Transform position;
+
+    [Space]
+    [Header("Buildings prefabs")]
     [SerializeField] private GameObject[] greenObjects;
     [SerializeField] private GameObject[] greyObjects;
+
+    
+    [NonSerialized] public Transform position;
 
     void Update()
     {
@@ -38,7 +43,7 @@ public class ShopScript : MonoBehaviour
             }
             GameObject g = Instantiate(greenObjects[index], position.position + Vector3.up * 2, Quaternion.identity);
             g.transform.parent = position;
-            g.transform.Rotate(new Vector3(0f, Random.Range(0f, 360f)));
+            g.transform.Rotate(new Vector3(0f, UnityEngine.Random.Range(0f, 360f)));
             
         }
         else
@@ -56,7 +61,7 @@ public class ShopScript : MonoBehaviour
             }
             GameObject g = Instantiate(greyObjects[index], position.position + Vector3.up * 2, Quaternion.identity);
             g.transform.parent = position;
-            g.transform.Rotate(new Vector3(0f, Random.Range(0f, 360f)));
+            g.transform.Rotate(new Vector3(0f, UnityEngine.Random.Range(0f, 360f)));
             
         }
         DataHolder.main.RefreshScore();

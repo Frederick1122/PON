@@ -5,17 +5,17 @@ using UnityEngine;
 public class DeathZone : MonoBehaviour
 {
     public static DeathZone main;
-    [SerializeField] private float rebirthTime;
-    /*[HideInInspector]*/
-    public List<Transform> SpawnsFirstPlayer = new List<Transform>();
-    /*[HideInInspector]*/
-    public List<Transform> SpawnsSecondPlayer = new List<Transform>();
+
+    [Header("SpawnSettings")]
     [SerializeField] private GameObject firstPlayer;
     [SerializeField] private AttackEnergy firstAttackEnergy;
     [SerializeField] private GameObject secondPlayer;
     [SerializeField] private AttackEnergy secondAttackEnergy;
 
-
+    private float rebirthTime;
+    [HideInInspector] public List<Transform> SpawnsFirstPlayer = new List<Transform>();
+    [HideInInspector] public List<Transform> SpawnsSecondPlayer = new List<Transform>();
+    
     private void Awake()
     {
         if (main != null && main != this)
@@ -28,6 +28,7 @@ public class DeathZone : MonoBehaviour
     }
     private void Start()
     {
+        rebirthTime = DataHolder.main.rebirthTime;
         Spawn(SpawnPosition("Player1"), firstPlayer, true);
         Spawn(SpawnPosition("Player2"), secondPlayer, true);
     }

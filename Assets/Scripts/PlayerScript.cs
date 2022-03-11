@@ -1,47 +1,52 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    [SerializeField] private GameObject aim;
-    public AttackEnergy attackEnergy;
+    [Header("PlayerSettings")]
     public bool isGreen;
     [SerializeField] private float speed;
-    //[SerializeField] private Animator characterAnimator;
-    public TowerPlaceManager checkerTower;
+    [SerializeField] private float gravityForce;
+
+    [Space]
+    [Header("AttackPreset")]
+    [SerializeField] private GameObject aim;
+    public AttackEnergy attackEnergy;
+    
+
+    // private settings
+    [NonSerialized]public TowerPlaceManager checkerTower;
     private Vector3 moveVector;
     private Vector3 moveVector2;
-    [SerializeField] private float gravityForce;
     private CharacterController characterController;
-    public bool action;
-    [SerializeField] private List<Ray> rays = new List<Ray>();
+    private List<Ray> rays = new List<Ray>();
+    Hashtable hashtableRays = new Hashtable();
 
-    [SerializeField] Hashtable hashtableRays = new Hashtable();
-    void AddNewRays(Vector3 direction)
+    public enum PlayerCondition
     {
-        rays.Add(new Ray(transform.position, direction));
-    }
+        moving,
+        stay
+    };
+    [NonSerialized]public PlayerCondition playerCondition;
+
+
+    
     void Start()
     {
-        action = false;
         characterController = GetComponent<CharacterController>();
+        playerCondition = PlayerCondition.moving;
         moveVector = Vector3.right;
         moveVector2 = Vector3.forward;
-        AddNewRays(new Vector3(0, -1, 2));
-        AddNewRays(new Vector3(0, -1, -2));
-        AddNewRays(new Vector3(-2, -1, 0));
-        AddNewRays(new Vector3(2, -1, 0));
-        AddNewRays(new Vector3(2, -1, 2));
-        AddNewRays(new Vector3(-2, -1, 2));
-        AddNewRays(new Vector3(2, -1, -2));
-        AddNewRays(new Vector3(-2, -1, -2));
+        StartingRays();
+
     }
     private void FixedUpdate()
     {
         FindEnemyBorder();
 
-        if (!action)
+        if (playerCondition == PlayerCondition.moving)
         {
             Gravity();
             MovePlayer();
@@ -61,6 +66,11 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
+    }
+
+    void AddNewRays(Vector3 direction)
+    {
+        rays.Add(new Ray(transform.position, direction));
     }
     private void MovePlayer()
     {
@@ -146,7 +156,9 @@ public class PlayerScript : MonoBehaviour
 
     void Action()
     {
-        if (action || hashtableRays.Count == 0 || attackEnergy.energy < 100) return;
+        if (playerCondition == PlayerCondition.stay 
+            || hashtableRays.Count == 0 
+            || attackEnergy.energy < 100) return;
         attackEnergy.energy = 0;
         ICollection keys = hashtableRays.Keys;
         foreach (int i in keys)
@@ -156,9 +168,8 @@ public class PlayerScript : MonoBehaviour
             Physics.Raycast(r, out hit);
             GameObject g = Instantiate(aim, hit.point, Quaternion.identity);
             g.GetComponent<AimRange>().player = this;
-            g.GetComponent<AimRange>().isGreen = isGreen;
-            action = true;
-            action = true;
+
+            playerCondition = PlayerCondition.stay;
             break;
         }
     }
@@ -166,5 +177,15 @@ public class PlayerScript : MonoBehaviour
     {
         hashtableRays.Clear();
     }
-
+    public void StartingRays()
+    {
+        AddNewRays(new Vector3(0, -1, 2));
+        AddNewRays(new Vector3(0, -1, -2));
+        AddNewRays(new Vector3(-2, -1, 0));
+        AddNewRays(new Vector3(2, -1, 0));
+        AddNewRays(new Vector3(2, -1, 2));
+        AddNewRays(new Vector3(-2, -1, 2));
+        AddNewRays(new Vector3(2, -1, -2));
+        AddNewRays(new Vector3(-2, -1, -2));
+    }
 }
