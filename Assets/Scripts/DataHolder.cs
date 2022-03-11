@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class DataHolder : MonoBehaviour
 {
     public static DataHolder main;
-
+    [SerializeField] private MenuManager menuManager;
     [Header("UIElements")]
     [SerializeField] private Slider carmaSlider;
     [SerializeField] private Text FPScore;
@@ -18,6 +18,7 @@ public class DataHolder : MonoBehaviour
     public float rebirthTime;
     public int RangeSpeed;
     public int minutes;
+    public int maxQuantityCoins;
 
     [Space(5)]
     [Header("FOR DEBUG")]
@@ -37,6 +38,7 @@ public class DataHolder : MonoBehaviour
         }
 
         main = this;
+        
     }
     private void Start()
     {
@@ -98,6 +100,6 @@ public class DataHolder : MonoBehaviour
     }
     public void Restart()
     {
-        SceneManager.LoadScene(0);
+        menuManager.PlayEndMenu();
     }
 }

@@ -11,14 +11,15 @@ public class PlatformManager : MonoBehaviour
     [Header("AreaSettings")]
     [SerializeField] private float coinSpawnTime;
     [Space]
-    [SerializeField] List<GameObject> greenArea = new List<GameObject>();
-    [SerializeField] List<GameObject> greyArea = new List<GameObject>();
+    public List<GameObject> greenArea = new List<GameObject>();
+    public List<GameObject> greyArea = new List<GameObject>();
     [SerializeField] private GameObject greenCoin;
     [SerializeField] private GameObject greyCoin;
     [Space]
     [SerializeField] private GameObject container;
     [NonSerialized]public int FPQuantityCoins;
     [NonSerialized]public int SPQuantityCoins;
+    [NonSerialized]public int maxQuantityCoins;
     private void Awake()
     {
         if (main != null && main != this)
@@ -34,6 +35,7 @@ public class PlatformManager : MonoBehaviour
         SPQuantityCoins = 0;
         NewSpawnPositions(true);
         StartCoroutine(CoinSpawner());
+        maxQuantityCoins = DataHolder.main.maxQuantityCoins;
     }
     public void RegionCapture(bool itsGreen)
     {
@@ -142,7 +144,7 @@ public class PlatformManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(coinSpawnTime);
-            if (FPQuantityCoins < 15)
+            if (FPQuantityCoins < maxQuantityCoins)
             {
                 FPQuantityCoins++;
                 MeshCollider col = greenArea[Random.Range(0, greenArea.Count)].GetComponent<MeshCollider>();
@@ -154,7 +156,7 @@ public class PlatformManager : MonoBehaviour
                 g.GetComponent<CoinScript>().isGreen = true;
                 g.transform.parent = container.transform;
             }
-            if (SPQuantityCoins < 15)
+            if (SPQuantityCoins < maxQuantityCoins)
             {
                 SPQuantityCoins++;
                 MeshCollider col = greyArea[Random.Range(0, greyArea.Count)].GetComponent<MeshCollider>();

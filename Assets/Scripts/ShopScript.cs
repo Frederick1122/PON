@@ -32,10 +32,10 @@ public class ShopScript : MonoBehaviour
         if (isGreen)
         {
             //Debug.Log($"YES {gameObject.name}");
-            if (DataHolder.main.coins[0] < 20 * (index + 1)) return;
+            if (DataHolder.main.coins[0] < 10 * (index + 1)) return;
             else
             {
-                DataHolder.main.coins[0] -= 20 * (index + 1);
+                DataHolder.main.coins[0] -= 10 * (index + 1);
             }
             foreach (Transform child in position)
             {
